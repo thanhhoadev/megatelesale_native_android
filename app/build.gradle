@@ -10,8 +10,8 @@ android {
         applicationId "com.example.duan1_customer"
         minSdk 29
         targetSdk 33
-        versionCode 11
-        versionName "2.1.0"
+        versionCode 13
+        versionName "2.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -24,7 +24,12 @@ public class Profile_User implements Serializable {
         this.status = status;
     }
 
-    public Profile_User(String email, String password) {
+    public Profile_User(String _id, String name){
+        this._id = _id;
+        this.name = name;
+    }
+
+    public Profile_User(String email, String password, String name) {
         this.email = email;
         this.password = password;
     }

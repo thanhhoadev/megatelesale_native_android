@@ -45,6 +45,7 @@ public class Customer implements Serializable {
     private String final_status_date;
     private String created_at;
     private String updated_at;
+    private Profile_User telesales_second;
 
     public String get_id() {
         return _id;
@@ -350,6 +351,14 @@ public class Customer implements Serializable {
         this.updated_at = updated_at;
     }
 
+    public Profile_User getTelesales_second() {
+        return telesales_second;
+    }
+
+    public void setTelesales_second(Profile_User telesales_second) {
+        this.telesales_second = telesales_second;
+    }
+
     public Customer(String _id, String branch, String date, String zalo, ArrayList<String> history, ArrayList<String> history_edit, String date_of_birth, String source, String name, String phone, ArrayList<String> record, String address, int rate, String social_media, ArrayList<String> bill_media, String note, String sex, ArrayList<String> service, ArrayList<String> media, String service_detail, String pancake, String schedule, String register_schedule, Profile_User telesales, String status, String status_data, String sales, String sales_assistant, int total_amount, int amount_paid, int outstanding_amount, String reason_failure, String final_status_branch, String final_status, String final_status_date, String created_at, String updated_at) {
         this._id = _id;
         this.branch = branch;
@@ -433,5 +442,47 @@ public class Customer implements Serializable {
         this.final_status_date = final_status_date;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public Customer(String _id, String parent_id, String branch, String date, String zalo, ArrayList<String> history, ArrayList<String> history_edit, String date_of_birth, String source, String name, String phone, ArrayList<String> record, String address, int rate, String social_media, ArrayList<String> bill_media, String note, String sex, ArrayList<String> service, ArrayList<String> media, String service_detail, String pancake, String schedule, String register_schedule, Profile_User telesales, String status, String status_data, String sales, String sales_assistant, int total_amount, int amount_paid, int outstanding_amount, String reason_failure, String final_status_branch, String final_status, String final_status_date, String created_at, String updated_at, Profile_User telesales_second) {
+        this._id = _id;
+        this.parent_id = parent_id;
+        this.branch = branch;
+        this.date = date;
+        this.zalo = zalo;
+        this.history = history;
+        this.history_edit = history_edit;
+        this.date_of_birth = date_of_birth;
+        this.source = source;
+        this.name = name;
+        this.phone = phone;
+        this.record = record;
+        this.address = address;
+        this.rate = rate;
+        this.social_media = social_media;
+        this.bill_media = bill_media;
+        this.note = note;
+        this.sex = sex;
+        this.service = service;
+        this.media = media;
+        this.service_detail = service_detail;
+        this.pancake = pancake;
+        this.schedule = schedule;
+        this.register_schedule = register_schedule;
+        this.telesales = telesales;
+        this.status = status;
+        this.status_data = status_data;
+        this.sales = sales;
+        this.sales_assistant = sales_assistant;
+        this.total_amount = total_amount;
+        this.amount_paid = amount_paid;
+        this.outstanding_amount = outstanding_amount;
+        this.reason_failure = reason_failure;
+        this.final_status_branch = final_status_branch;
+        this.final_status = final_status;
+        this.final_status_date = final_status_date;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.telesales_second = telesales_second;
     }
 }

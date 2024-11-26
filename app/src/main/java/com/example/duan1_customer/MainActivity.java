@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         setUserTarget(gson.fromJson(sharedPreferences.getString("user", ""), Profile_User.class));
 
         service = ApiClient.getClient(MainActivity.this.getApplicationContext()).create(ServiceAPI.class);
-        if (getUserTarget().get_id().equals("6725c2dec6412e84f3476f9f")){
+        if (getUserTarget().get_id().equals("672344bb84df1a39767a57c8")){
             selectUser.setVisibility(View.VISIBLE);
         }else{
             selectUser.setVisibility(View.GONE);
@@ -175,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void openCallAndListener(){
-        Intent intent = new Intent(Intent.ACTION_CALL);
+        Intent intent = new Intent(Intent.ACTION_DIAL);
         intent.setData(Uri.parse("tel:" + getCustomerTarget().getPhone()));
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             callDetectionManager.startListener();
@@ -193,9 +191,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     public void reopenApp() {
-//        Intent intent = new Intent(MainActivity.this, MainActivity.class); // Hoặc Activity bạn muốn mở lại
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        MainActivity.this.startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, MainActivity.class); // Hoặc Activity bạn muốn mở lại
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        MainActivity.this.startActivity(intent);
         MainActivity.this.findAndUploadLatestRecording();
     }
 
@@ -440,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void handleLogin (String email,String pass) {
-        Profile_User user = new Profile_User(email.trim(), pass.trim());
+        Profile_User user = new Profile_User(email.trim(), pass.trim(), "name");
 
         ServiceAPI serviceAPI = ApiClient.getClient(getApplicationContext()).create(ServiceAPI.class);
 
@@ -472,18 +470,19 @@ public class MainActivity extends AppCompatActivity {
         });
     };
     private void createListLogin(){
-        listLogin.add(new Profile_User("phuongthao@megakorea.vn","TH@Mega029"));
-        listLogin.add(new Profile_User("tham@megakorea.vn", "TH@Mega029"));
-        listLogin.add(new Profile_User("linh@megakorea.vn", "TH@Mega029"));
-        listLogin.add(new Profile_User("telequyen@megakorea.vn", "trial123aA@"));
-        listLogin.add(new Profile_User("teletrinh@megakorea.vn", "trial123aA@"));
-        listLogin.add(new Profile_User("teletran@megakorea.vn", "trial123aA@"));
-        listLogin.add(new Profile_User("tuongvy@megakorea.vn", "TV@Mega1"));
-        listLogin.add(new Profile_User("mainhi@megakorea.vn", "MN@Mega26"));
-        listLogin.add(new Profile_User("ngoc@megakorea.vn","NG@Mega02"));
-        listLogin.add(new Profile_User("xinh@megakorea.vn", "XI@Mega065"));
-        listLogin.add(new Profile_User("my@megakorea.vn", "M@Mega003"));
-        listLogin.add(new Profile_User("thuylinh@megakorea.vn", "TL@Mega026"));
-        listLogin.add(new Profile_User("thuy@megakorea.vn","TH@Mega029"));
+        listLogin.add(new Profile_User("telethuyvy@megakorea.vn","trial123aA@", "Admin"));
+        listLogin.add(new Profile_User("phuongthao@megakorea.vn","TH@Mega029", "Phương Thảo"));
+        listLogin.add(new Profile_User("tham@megakorea.vn", "TH@Mega029", "Thắm"));
+        listLogin.add(new Profile_User("linh@megakorea.vn", "TH@Mega029", "Linh"));
+        listLogin.add(new Profile_User("telequyen@megakorea.vn", "trial123aA@", "Quyên"));
+        listLogin.add(new Profile_User("teletrinh@megakorea.vn", "trial123aA@", "Trinh"));
+        listLogin.add(new Profile_User("teletran@megakorea.vn", "trial123aA@", "Trân"));
+        listLogin.add(new Profile_User("tuongvy@megakorea.vn", "TV@Mega1", "Tường Vy"));
+        listLogin.add(new Profile_User("mainhi@megakorea.vn", "MN@Mega26", "Mai Nhi"));
+        listLogin.add(new Profile_User("ngoc@megakorea.vn","NG@Mega02", "Ngọc"));
+        listLogin.add(new Profile_User("xinh@megakorea.vn", "XI@Mega065", "Xinh"));
+        listLogin.add(new Profile_User("my@megakorea.vn", "M@Mega003", "My"));
+        listLogin.add(new Profile_User("thuylinh@megakorea.vn", "TL@Mega026", "Thùy Linh"));
+        listLogin.add(new Profile_User("thuy@megakorea.vn","TH@Mega029", "Thúy"));
     }
 }

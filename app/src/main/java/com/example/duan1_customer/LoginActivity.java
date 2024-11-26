@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     String email, pass;
 
     public void handleLogin () {
-        Profile_User user = new Profile_User(email.trim(), pass.trim());
+        Profile_User user = new Profile_User(email.trim(), pass.trim(), "name");
 
         ServiceAPI serviceAPI = ApiClient.getClient(getApplicationContext()).create(ServiceAPI.class);
 
@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("email", email);
-                        editor.putString("pass", pass);
                         editor.putBoolean("isRemember", chkRemember.isChecked());
                         Gson gson1 = new Gson();
                         editor.putString("user", gson1.toJson(responseUser.result.user));
@@ -110,10 +109,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean check = sharedPreferences.getBoolean("isRemember", false);
         if(check){
             email = sharedPreferences.getString("email","");
-            pass = sharedPreferences.getString("pass","");
             chkRemember.setChecked(check);
             edtEmail.setText(email);
-            edtPassWord.setText(pass);
         };
 
 
