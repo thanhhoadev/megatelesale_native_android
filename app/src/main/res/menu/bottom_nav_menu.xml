@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/menu_home"
+        android:title="Khách của tôi"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/menu_explore"
+        android:title="Thả nổi"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"/>
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="Tài Khoản"
+        android:enabled="true"
+        android:icon="@drawable/ic_account"/>
+</menu>

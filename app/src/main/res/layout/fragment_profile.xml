@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ProfileFragment">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/mega_logo"/>
+
+
+
+            </LinearLayout>
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/btnDetailProfile"-->
+<!--                android:layout_marginBottom="1dp"-->
+<!--                android:background="@drawable/background_item_profile"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginTop="40dp"-->
+<!--                android:paddingHorizontal="12dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:src="@drawable/icon_user"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="8"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="Thông tin tài khoản"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textFontWeight="700"-->
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="20dp"/>-->
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/btnHistory"-->
+<!--                android:layout_marginBottom="1dp"-->
+<!--                android:background="@drawable/background_item_profile"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:paddingHorizontal="12dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_height="35dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:src="@drawable/icon_history"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="8"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="Lịch sử cắt"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textFontWeight="700"-->
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="20dp"/>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_marginBottom="1dp"-->
+<!--                android:background="@drawable/background_item_profile"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_width="350dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:paddingHorizontal="12dp"-->
+<!--                android:id="@+id/btnChangePass"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:src="@drawable/baseline_lock_24"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="8"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="Đổi mật khẩu"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textFontWeight="700"-->
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="20dp"/>-->
+
+
+<!--            </LinearLayout>-->
+            <LinearLayout
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/background_item_profile"
+                android:layout_gravity="center"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/btnLogOut"
+                android:paddingHorizontal="12dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:layout_height="30dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_exit"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:layout_height="match_parent"
+                    android:text="Đăng xuất"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:textFontWeight="700"
+                    android:paddingStart="20dp"
+                    android:paddingTop="20dp"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+</FrameLayout>

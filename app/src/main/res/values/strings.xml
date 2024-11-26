@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">MegaTelesale</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="linkProgressBar">https://i.pinimg.com/originals/ca/89/fb/ca89fbce5e5c68f46d5330946c58ddc6.gif</string>
+    <string name="linkProgressBar2">https://i.stack.imgur.com/8puiO.gif</string>
+    <string name="linkNoAvatar">https://i.pinimg.com/originals/e0/7a/22/e07a22eafdb803f1f26bf60de2143f7b.png</string>
+    <string-array name="sample_array">
+        <item value="66f4d45d4596ccc8fcdcc012">Phương Thảo</item>
+        <item value="66f4d46a4596ccc8fcdcc013">Thắm</item>
+        <item value="66f4d4714596ccc8fcdcc014">Linh</item>
+        <item value="671c914096f2db27e56919b4">Quyên</item>
+        <item value="671c916e96f2db27e56919b5">Trinh</item>
+        <item value="671c919696f2db27e56919b6">Trân</item>
+        <item value="6725c2dec6412e84f3476f9f">Tường Vy</item>
+        <item value="6725c30bc6412e84f3476fa0">Mai Nhi</item>
+        <item value="6725c334c6412e84f3476fa1">Ngọc</item>
+        <item value="6725c3a8c6412e84f3476fa2">Xinh</item>
+        <item value="6725c3e6c6412e84f3476fa3">My</item>
+        <item value="6725c407c6412e84f3476fa4">Thùy Linh</item>
+        <item value="6725c42bc6412e84f3476fa5">Thúy</item>
+    </string-array>
+</resources>
