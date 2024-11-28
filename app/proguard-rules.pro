@@ -48,3 +48,9 @@
 -keep class io.reactivex.** { *; }
 -keep class com.google.android.gms.** { *; }
 -dontwarn com.google.android.gms.**
+# Giữ lại tất cả các class và method của MobileFFmpeg
+-keep class com.arthenica.mobileffmpeg.** { *; }
+
+# Giữ lại các class liên quan đến thư viện FFmpeg
+-keep class org.bytedeco.javacpp.** { *; }
+-keepclassmembers class org.bytedeco.javacpp.** { *; }
