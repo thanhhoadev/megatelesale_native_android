@@ -24,6 +24,9 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.arthenica.mobileffmpeg.Config;
+import com.arthenica.mobileffmpeg.FFmpeg;
 import com.example.duan1_customer.fragment.ExploreFragment;
 import com.example.duan1_customer.fragment.ProfileFragment;
 import com.example.duan1_customer.fragment.HomeFragment;
@@ -61,7 +64,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private static final int PICK_FILE_REQUEST = 1;
     FragmentManager fragmentManager;
-    Fragment fragment;
+    public Fragment fragment;
     FrameLayout fl_main;
     Spinner selectUser;
     SharedPreferences sharedPreferences;
@@ -173,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void openCallAndListener(){
-        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Intent intent = new Intent(Intent.ACTION_CALL);
         intent.setData(Uri.parse("tel:" + getCustomerTarget().getPhone()));
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             callDetectionManager.startListener();
@@ -191,9 +194,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     public void reopenApp() {
-        Intent intent = new Intent(MainActivity.this, MainActivity.class); // Hoặc Activity bạn muốn mở lại
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        MainActivity.this.startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, MainActivity.class); // Hoặc Activity bạn muốn mở lại
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        MainActivity.this.startActivity(intent);
+        if (fragment instanceof HomeFragment) ((HomeFragment)fragment).listMyCustomers();
+        else if (fragment instanceof ExploreFragment) ((ExploreFragment)fragment).listMyCustomers();
         MainActivity.this.findAndUploadLatestRecording();
     }
 
@@ -259,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("FilePicker", "Final File Path: " + filePath);
 
                 // Upload file
-                uploadFileToServer(filePath);
+                prepareAndUploadFile(filePath);
             } else {
                 Log.e("FilePicker", "Unable to resolve file path");
             }
@@ -330,6 +335,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Lỗi kết nối, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
             }
         });
+        if(fragment instanceof HomeFragment) ((HomeFragment)fragment).progressBar.setVisibility(View.GONE);
+        else if (fragment instanceof ExploreFragment) ((ExploreFragment)fragment).progressBar.setVisibility(View.GONE);
     }
     private void updateMissedTele(){
         Date date = new Date();
@@ -355,6 +362,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
             }
         });
+        if(fragment instanceof HomeFragment) ((HomeFragment)fragment).progressBar.setVisibility(View.GONE);
+        else if (fragment instanceof ExploreFragment) ((ExploreFragment)fragment).progressBar.setVisibility(View.GONE);
     }
 
     private File findLatestRecording() {
@@ -411,6 +420,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void findAndUploadLatestRecording() {
+        if(fragment instanceof HomeFragment) ((HomeFragment)fragment).progressBar.setVisibility(View.VISIBLE);
+        else if (fragment instanceof ExploreFragment) ((ExploreFragment)fragment).progressBar.setVisibility(View.VISIBLE);
         Thread thread = new Thread(() -> {
             try {
 
@@ -426,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
                 long fileLastModified = latestRecording.lastModified();
                 long timeDifference = currentTime - fileLastModified;
                 if (latestRecording.getName().contains(customerTarget.getPhone()) && timeDifference < 60000) {
-                    uploadFileToServer(latestRecording.getAbsolutePath());
+                    prepareAndUploadFile(latestRecording.getAbsolutePath());
                     return;
                 }
                 updateMissedTele();
@@ -484,5 +495,28 @@ public class MainActivity extends AppCompatActivity {
         listLogin.add(new Profile_User("my@megakorea.vn", "M@Mega003", "My"));
         listLogin.add(new Profile_User("thuylinh@megakorea.vn", "TL@Mega026", "Thùy Linh"));
         listLogin.add(new Profile_User("thuy@megakorea.vn","TH@Mega029", "Thúy"));
+    }
+    public void convertToMp3(String inputFilePath, String outputFilePath, Runnable onSuccess, Runnable onFailure) {
+        String command = "-i " + inputFilePath + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFilePath;
+
+        FFmpeg.executeAsync(command, (executionId, returnCode) -> {
+            if (returnCode == Config.RETURN_CODE_SUCCESS) {
+                onSuccess.run();
+            } else {
+                onFailure.run();
+            }
+        });
+    }
+    private void prepareAndUploadFile(String originalFilePath) {
+        String outputFilePath = getExternalFilesDir(null) + "/converted_audio.mp3";
+
+        convertToMp3(originalFilePath, outputFilePath, () -> {
+            // Chuyển đổi thành công
+            uploadFileToServer(outputFilePath);
+        }, () -> {
+            // Chuyển đổi thất bại
+            uploadFileToServer(originalFilePath);
+            runOnUiThread(() -> Toast.makeText(this, "Failed to convert file to MP3", Toast.LENGTH_SHORT).show());
+        });
     }
 }

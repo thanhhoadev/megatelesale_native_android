@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duan1_customer.MainActivity;
 import com.example.duan1_customer.R;
+import com.example.duan1_customer.fragment.ExploreFragment;
+import com.example.duan1_customer.fragment.HomeFragment;
 import com.example.duan1_customer.model.Customer;
 
 import java.util.ArrayList;
@@ -57,6 +60,9 @@ public class CustomersAdapter extends RecyclerView.Adapter<CustomersAdapter.View
         holder.btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment fragment = ((MainActivity)context).fragment;
+                if (fragment instanceof HomeFragment) ((HomeFragment)fragment).addHistoryCall(list.get(position));
+                else if (fragment instanceof ExploreFragment) ((ExploreFragment)fragment).addHistoryCall(list.get(position));
                 ((MainActivity)context).setCustomerTarget(list.get(position));
                 ((MainActivity)context).openCallAndListener();
             };

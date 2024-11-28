@@ -13,9 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.duan1_customer.HistoryCustomerManager;
 import com.example.duan1_customer.R;
 import com.example.duan1_customer.adapter.CustomersAdapter;
 import com.example.duan1_customer.model.ApiClient;
@@ -28,6 +30,8 @@ import com.example.duan1_customer.model.ServiceAPI;
 import com.example.duan1_customer.model.TokenManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +53,8 @@ public class ExploreFragment extends Fragment {
     // Thêm Handler để xử lý setTimeout
     private Handler searchHandler = new Handler(Looper.getMainLooper());
     private Runnable searchRunnable;
+    HistoryCustomerManager manager;
+    public ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +64,14 @@ public class ExploreFragment extends Fragment {
         svSearch = view.findViewById(R.id.svSearch);
         ivRefresh = view.findViewById(R.id.ivRefresh);
         nameScreen = view.findViewById(R.id.tvNameScreen);
+        progressBar = view.findViewById(R.id.progressBar);
         tokenManager = new TokenManager(getContext());
         nameScreen.setText("Khách thả nổi");
         customers = new ArrayList<>();
 
         service = ApiClient.getClient(getActivity().getApplicationContext()).create(ServiceAPI.class);
         customerFilterRequestType = new CustomerFilterRequestType();
+        manager = HistoryCustomerManager.getInstance(getContext());
 
         listMyCustomers();
 
@@ -84,18 +92,16 @@ public class ExploreFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Nếu người dùng nhập liệu, delay 1 giây trước khi gọi API
-                if (searchRunnable != null) {
-                    searchHandler.removeCallbacks(searchRunnable); // Hủy các callback trước đó
-                }
-                searchRunnable = () -> searchCustomers(newText); // Chạy tìm kiếm sau 1 giây
-                searchHandler.postDelayed(searchRunnable, 1000);
+                searchCusInList(newText);
                 return true;
             }
         });
 
 
         return view;
+    }
+    public void addHistoryCall(Customer customer){
+        manager.addCustomer(customer);
     }
 
     public void listMyCustomers() {
@@ -104,7 +110,22 @@ public class ExploreFragment extends Fragment {
             @Override
             public void onResponse(Call<Response_GetCustomer_ByTelesale> call, Response<Response_GetCustomer_ByTelesale> response) {
                 if (response.isSuccessful() && response.body() != null) {
+//                    if (response.body().result.customers.size() > 0 && customers.size() > 0 && response.body().result.customers.get(0) != customers.get(0)) return;
                     customers = response.body().result.customers;
+                    if(manager.getHistoryCustomerList().size() > 0){
+                        Customer lastHistoryCustomer = (manager.getHistoryCustomerList()).get(manager.getHistoryCustomerList().size() - 1);
+                        Collections.sort(customers, new Comparator<Customer>() {
+                            @Override
+                            public int compare(Customer c1, Customer c2) {
+                                if (c1.equals(lastHistoryCustomer)) {
+                                    return -1; // Đưa target lên đầu
+                                } else if (c2.equals(lastHistoryCustomer)) {
+                                    return 1;  // Đưa target lên đầu
+                                }
+                                return 0; // Giữ nguyên thứ tự cho các phần tử khác
+                            }
+                        });
+                    }
                     customersAdapter = new CustomersAdapter(getContext(), customers);
                     linearLayoutManager = new LinearLayoutManager(getContext());
                     linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -121,7 +142,27 @@ public class ExploreFragment extends Fragment {
             }
         });
     }
-
+    private void searchCusInList(String phoneNumber) {
+        ArrayList<Customer> filteredCustomers = new ArrayList<>();
+        if (phoneNumber != null && phoneNumber.length() ==0) {
+            listMyCustomers();
+            return;
+        }
+        for (Customer customer : customers) {
+            if (customer.getPhone().contains(phoneNumber.trim())) {
+                filteredCustomers.add(customer);
+            }
+        }
+        customersAdapter = new CustomersAdapter(getContext(), filteredCustomers);
+        rcViewMyCus.setAdapter(customersAdapter);
+        if (filteredCustomers.size() == 0) {
+            if (searchRunnable != null) {
+                searchHandler.removeCallbacks(searchRunnable); // Hủy các callback trước đó
+            }
+            searchRunnable = () -> searchCustomers(phoneNumber); // Chạy tìm kiếm sau 1 giây
+            searchHandler.postDelayed(searchRunnable, 500);
+        }
+    }
     private void searchCustomers(String phoneNumber) {
         // Thêm logic filter theo số điện thoại vào body request
         Call<Response_SearchCus> call = service.searchPhoneByExpried(new Request(phoneNumber));

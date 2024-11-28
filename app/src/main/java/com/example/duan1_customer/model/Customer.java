@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Keep
 public class Customer implements Serializable {
@@ -484,5 +485,20 @@ public class Customer implements Serializable {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.telesales_second = telesales_second;
+    }
+
+    // equals
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Customer customer = (Customer) obj;
+        return get_id().equals(customer.get_id()); // Dùng getter thay vì truy cập trực tiếp
+    }
+
+    // hashCode
+    @Override
+    public int hashCode() {
+        return get_id().hashCode(); // Dùng getter thay vì truy cập trực tiếp
     }
 }
